@@ -13,7 +13,6 @@ _Advent of Code_ is an [Advent calendar](https://en.wikipedia.org/wiki/Advent_ca
 | Year    | Stars |
 | -------- | ------- |
 | ![](https://img.shields.io/badge/📅-2023-blue) | ![](https://img.shields.io/badge/stars%20⭐-50-yellow) |
-| -------- | ------- |
 | ![](https://img.shields.io/badge/📅-2024-blue) | ![](https://img.shields.io/badge/stars%20%E2%AD%90-work%20in%20progress-yellow) |
 
 Whole code is wrote in Python
