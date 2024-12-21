@@ -1,0 +1,58 @@
+from sys import stdin
+from collections import defaultdict
+
+grid = []
+start = ()
+path_time = 0
+for line in stdin:
+    row = []
+    for x in range(0, len(line.strip())):
+        if line[x] == "S": start = (x, len(grid))
+        if line[x] == ".": path_time += 1
+        row.append(line[x])
+    grid.append(row)
+
+seen = set()
+dists = [(path_time, start[0], start[1])]
+dists_map = {(start[0], start[1]): path_time}
+while True:
+    dist, x, y = dists[-1]
+
+    if grid[y][x] == "E":
+        break
+
+    seen.add((x,y))
+
+    for nx, ny in [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]:
+        if grid[ny][nx] == "#": continue
+        if (nx, ny) in seen: continue
+
+        dists.append((dist-1, nx, ny))
+        dists_map[(nx, ny)] = dist-1
+
+cheat_map = defaultdict(int)
+dists_heap = list(reversed(dists.copy()))
+
+seen = set()
+while dists_heap:
+    dist, x, y = dists_heap.pop()
+
+    seen.add((x, y))
+
+    for dir_x, dir_y in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+        nx, ny = x+dir_x, y+dir_y
+        
+        if grid[ny][nx] != "#": continue
+
+        nx, ny = nx+dir_x, ny+dir_y
+        if not (0 <= nx < len(grid[0])) or not (0 <= ny < len(grid)): continue
+        
+        if (nx, ny) in dists_map and not (nx, ny) in seen:
+            manhattan_dist = dist - dists_map[(nx, ny)] - 2
+            
+            cheat_map[manhattan_dist] += 1    
+count = 0
+for (k, v) in cheat_map.items():
+    if k >= 100:
+        count += v
+print(count) 
